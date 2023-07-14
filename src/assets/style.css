@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.formkit-message{
+    color: red;
+    font-size: 12px;
+}
