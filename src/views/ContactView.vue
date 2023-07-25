@@ -89,7 +89,3 @@ const submitForm = (formData: FormData) => {
 } 
 
 </script>
-
-<style scoped>
-
-</style>

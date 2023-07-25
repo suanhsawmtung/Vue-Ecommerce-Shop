@@ -14,6 +14,9 @@ module.exports = {
         'auto-one': 'repeat(auto-fit, minmax(200px, auto))',
         'auto-two': 'repeat(auto-fit, minmax(165px, auto))',
       },
+      colors: {
+        'modal': 'rgba(0, 0, 0, 0.5)'
+      }
     },
   },
   plugins: [],

@@ -2,14 +2,21 @@
     <main class="overflow-x-hidden">
         <section class="w-screen h-72 pt-16 bg-black flex flex-col gap-y-5 justify-center items-center">
             <h1 class="font-bold sm:text-4xl text-2xl text-white">#stayhome & explore</h1>
-            <div 
+            <form 
+                @submit.prevent="submitSearchForm" method="get"
                 class="flex items-center" 
             >
-                <input type="text" class="p-2 bg-white outline-none rounded-none" placeholder="Search in shop..">
-                <button class="bg-blue-600 p-2 text-white flex justify-center items-center">
+                <input 
+                    type="text" placeholder="Search in shop.." v-model="searchKey"
+                    class="p-2 bg-white outline-none rounded-none"
+                >
+                <button 
+                    type="submit"
+                    class="bg-blue-600 p-2 text-white flex justify-center items-center"
+                >
                     <i class="material-icons">search</i>
                 </button>
-            </div>
+            </form>
             <div class="flex justify-between items-center w-72 ">
                 <div class="relative ">
                     <span 
@@ -26,44 +33,38 @@
                     >
                         <ul class="h-[200px] w-[200px] overflow-y-auto shadow-md border z-10" >
                             <li 
+                                v-for="(category, index) in item.categories" :key="index"
+                                @click="item.filterItemsByCategory(category.id)"
                                 class="bg-white px-2 py-3 border-bottom border-b-2 border-solid border-gray-300 hover:text-blue-700 cursor-pointer"
                             >
-                                T-Shirt
-                            </li>
-                            <li 
-                                class="bg-white px-2 py-3 border-bottom border-b-2 border-solid border-gray-300 hover:text-blue-700 cursor-pointer"
-                            >
-                                T-Shirt
-                            </li>
-                            <li 
-                                class="bg-white px-2 py-3 border-bottom border-b-2 border-solid border-gray-300 hover:text-blue-700 cursor-pointer"
-                            >
-                                T-Shirt
-                            </li>
-                            <li 
-                                class="bg-white px-2 py-3 border-bottom border-b-2 border-solid border-gray-300 hover:text-blue-700 cursor-pointer"
-                            >
-                                T-Shirt
-                            </li>
-                            <li 
-                                class="bg-white px-2 py-3 border-bottom border-b-2 border-solid border-gray-300 hover:text-blue-700 cursor-pointer"
-                            >
-                                T-Shirt
-                            </li>
-                            <li 
-                                class="bg-white px-2 py-3 border-bottom border-b-2 border-solid border-gray-300 hover:text-blue-700 cursor-pointer"
-                            >
-                                T-Shirt
+                                {{ category.title }}
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="cursor-pointer" @click="$router.push({ path: '/cart' })">
+                <div class="relative cursor-pointer" @click="$router.push({ path: '/cart' })">
+                    <div 
+                        v-if="badgeStatus"
+                        class="absolute inline-flex items-center justify-center 
+                        w-4 h-4 text-xs font-bold text-white bg-red-500 border-2 border-white 
+                        rounded-full -top-2 -right-2 dark:border-gray-900"
+                    >
+                    </div>
                     <span class="material-icons text-white">shopping_cart_checkout</span>
                 </div>
             </div>
         </section>
-        <CardBox />
+        <CardBox 
+            :items="item.items" 
+            :categoryStatus="item.categoryStatus"
+            @addToCart="addToCart"
+            @getAllItems="item.getAllItems"
+        />
+        <Paginator 
+            v-if="item.PaginatedItems.links"
+            :data="item.PaginatedItems"
+            @pagination-change-page="item.getItems"
+        />
         <Footer />
     </main>
 </template>
@@ -71,12 +72,55 @@
 <script setup lang="ts">
 import Footer from '../components/Footer.vue';
 import CardBox from '../components/shop/CardBox.vue';
-import { ref } from 'vue';
+import Paginator from '@/components/Paginator.vue';
+import { ref, onMounted } from 'vue';
+import type { CartData } from '@/types/order';
+import { useAuthStore } from '@/stores/auth';
+import { useItemStore } from '@/stores/item';
+import { useOrderStore } from '@/stores/order';
+import { Toast } from '@/services/alert';
+import { useRouter } from 'vue-router';
 
+const auth = useAuthStore();
+const item = useItemStore();
+const order = useOrderStore();
+const router = useRouter();
+
+const searchKey = ref<string>('');
 let categoryDropdown = ref<boolean>(false);
+const badgeStatus = ref<boolean>(false);
+
+const submitSearchForm = () => {
+    if(searchKey.value !== '') item.getSearchItems(searchKey.value);
+    else item.getAllItems();
+}
+
+const addToCart= async(id: number) => {
+    if(auth.isAuthenticated){
+        let cartData: CartData = { id: id, quantity: 1 };
+        await order.addItemsToCart(cartData);
+        badgeStatus.value = true;
+        localStorage.setItem('cart', 'exist');
+        Toast.fire({
+            icon: 'success',
+            title: 'Added item to card.'
+        });
+    }else{
+        router.push({ path: '/login'});
+    }
+}
+
+const badge = () => {
+    if(localStorage.getItem('cart')) badgeStatus.value = true;
+    else badgeStatus.value = false;
+}
+
+
+onMounted(async() => {
+    await item.getAllItems();
+    await item.getAllCategories();
+    badge();
+})
 
 </script>
 
-<style scoped>
-
-</style>

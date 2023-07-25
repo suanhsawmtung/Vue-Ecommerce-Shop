@@ -18,6 +18,12 @@
                     <RouterLink to="/shop" active-class="text-blue-800">Shop</RouterLink>
                 </li>
                 <li class="hover:text-blue-700 cursor-pointer">
+                    <RouterLink to="/cart" active-class="text-blue-800">Cart</RouterLink>
+                </li>
+                <li class="hover:text-blue-700 cursor-pointer">
+                    <RouterLink to="/order" active-class="text-blue-800">Order</RouterLink>
+                </li>
+                <li class="hover:text-blue-700 cursor-pointer">
                     <RouterLink to="/contact" active-class="text-blue-800">Contact</RouterLink>
                 </li>
             </ul>
@@ -42,6 +48,12 @@
                 </li>
                 <li 
                     v-if="auth.isAuthenticated"
+                    class="hover:text-blue-700 cursor-pointer font-bold uppercase"
+                >
+                    {{ auth.user.name }}
+                </li>
+                <li 
+                    v-if="auth.isAuthenticated"
                     @click="accLogout"
                     class="hover:text-blue-700 cursor-pointer font-bold"
                 >
@@ -51,7 +63,14 @@
         </div>
 
         <div v-else>
-            <ul class="flex justify-between items-center sm:gap-x-6 gap-x-2">
+            <ul class="flex justify-between items-center sm:gap-x-6 gap-x-4">
+                <li 
+                    v-if="auth.isAuthenticated"
+                    class="w-7 h-7 sm:w-8 sm:h-8 uppercase bg-blue-200 rounded-full 
+                        cursor-pointer font-bold flex justify-center items-center"
+                >
+                    {{ auth.user.name.charAt(0) }}
+                </li>
                 <li @click="$emit('toggleSideBar')">
                     <span class="material-icons flex items-center">menu</span>
                 </li>
@@ -66,10 +85,11 @@
 
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';
-import { RouterLink } from 'vue-router';
-import router from '@/router';
+import { Toast } from '@/services/alert';
+import { RouterLink, useRouter } from 'vue-router';
 
 const auth = useAuthStore();
+const router = useRouter();
 
 let windowWidth = ref<number>(window.innerWidth);
 let searchDropdown = ref<boolean>(false);
@@ -83,6 +103,12 @@ const accLogout = async() => {
     if(!auth.isAuthenticated){
         localStorage.removeItem("token"); 
         router.push({ path: '/login' });
+        setTimeout(() => {
+            Toast.fire({
+                icon: 'success',
+                title: 'Logged out successfully'
+            });
+        }, 300);
     }
 }
 

@@ -23,6 +23,26 @@
             </li>
             <li 
                 @click="$emit('toggleSideBar')"
+                class="text-xl font-medium py-1 my-2 cursor-pointer"
+            >
+                <router-link to="/cart" active-class="text-blue-700" >
+                    <span class="flex items-center gap-x-3">
+                        <i class="material-icons">shopping_cart</i>Cart
+                    </span>
+                </router-link>
+            </li>
+            <li 
+                @click="$emit('toggleSideBar')"
+                class="text-xl font-medium py-1 my-2 cursor-pointer"
+            >
+                <router-link to="/order" active-class="text-blue-700" >
+                    <span class="flex items-center gap-x-3">
+                        <i class="material-icons">list_alt</i>Order
+                    </span>
+                </router-link>
+            </li>
+            <li 
+                @click="$emit('toggleSideBar')"
                 class="text-xl font-medium py-2 my-2 cursor-pointer"
             >
                 <router-link to="/contact" active-class="text-blue-700" >
@@ -32,7 +52,7 @@
                 </router-link>
             </li>
             <li 
-                v-if="!auth.isAuthenticated && localStorage.getItem('token')"
+                v-if="!auth.isAuthenticated "
                 @click="$emit('toggleSideBar')"
                 class="text-xl font-medium py-1 my-2 cursor-pointer"
             >
@@ -43,7 +63,7 @@
                 </router-link>
             </li>
             <li 
-                v-if="!auth.isAuthenticated && localStorage.getItem('token')"
+                v-if="!auth.isAuthenticated "
                 @click="$emit('toggleSideBar')"
                 class="text-xl font-medium py-2 my-2 cursor-pointer"
             >
@@ -68,10 +88,11 @@
 
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth';
-import { RouterLink } from 'vue-router';
-import router from '@/router';
+import { Toast } from '@/services/alert';
+import { RouterLink, useRouter } from 'vue-router';
 
 const auth = useAuthStore();
+const router = useRouter();
 
 const emit = defineEmits(['toggleSideBar']);
 
@@ -81,11 +102,13 @@ const accLogout = async() => {
         localStorage.removeItem("token"); 
         emit('toggleSideBar');
         router.push({ path: '/login' });
+        setTimeout(() => {
+            Toast.fire({
+                icon: 'success',
+                title: 'Logged out successfully'
+            });
+        }, 300);
     }
 }
 
 </script>
-
-<style scoped>
-
-</style>

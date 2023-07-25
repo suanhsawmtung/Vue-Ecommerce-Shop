@@ -70,7 +70,3 @@ import CardBox from '../components/home/CardBox.vue';
 import Footer from '@/components/Footer.vue';
 
 </script>
-
-<style scoped>
-
-</style>

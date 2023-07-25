@@ -87,15 +87,16 @@
 
 <script setup lang="ts">
 import { reactive, computed } from 'vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
+import { Toast } from '@/services/alert';
 import setAuthToken from '@/services/axios';
 import useVuelidate from '@vuelidate/core';
 import { required, email, minLength } from '@vuelidate/validators';
 import BaseInput from '@/components/BaseInput.vue';
-import router from '@/router';
 
 const auth = useAuthStore();
+const router = useRouter();
 
 const loginFormData = reactive({
     email: "",
@@ -120,12 +121,14 @@ const submitLoginForm = async() => {
             localStorage.setItem("token", auth.user.token);
             setAuthToken();
             router.push({ path: '/' });
+            setTimeout(() => {
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Welcome to vue shop...'
+                });
+            }, 300);
         }
     }
 }
 
 </script>
-
-<style scoped>
-
-</style>

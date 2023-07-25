@@ -30,7 +30,7 @@ const router = createRouter({
       component: () => import('../views/ContactView.vue')
     },
     {
-      path: '/detail',
+      path: '/detail/:code',
       name: 'detail',
       component: () => import('../views/DetailView.vue')
     },
