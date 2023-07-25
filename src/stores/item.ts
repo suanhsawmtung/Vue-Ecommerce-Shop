@@ -5,6 +5,9 @@ import type { PaginatedItemsData, Datum, Items, Category } from "@/types/shop";
 export const useItemStore = defineStore('item', {
     state: (): PaginatedItemsData => ({
         PaginatedItems: <Items>{},
+        latestItems: <Datum[]>[],
+        popularItems: <Datum[]>[],
+        bestRatingItems: <Datum>[],
         categories: <Category[]>[],
         categoryStatus: 'All',
     }),
@@ -51,6 +54,22 @@ export const useItemStore = defineStore('item', {
             try{
                 const { data } = await axios.get(url);
                 this.PaginatedItems = data.items;
+            }catch(error){
+                console.log(error);
+            }
+        },
+        async getLatestItems() {
+            try{
+                const { data } = await axios.get('/item/getLatestItems');
+                this.latestItems = data.items;
+            }catch(error){
+                console.log(error);
+            }
+        },
+        async getPopularItems() {
+            try{
+                const { data } = await axios.get('/item/getPopularItems');
+                this.popularItems = data.items;
             }catch(error){
                 console.log(error);
             }

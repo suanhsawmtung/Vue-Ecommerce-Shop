@@ -29,10 +29,24 @@
             </div>
         </section>
         <section class="w-screen h-auto bg-gray-100 py-12" >
-            <CardBox title="Latest" />
-            <CardBox title="Popular Now" />
-            <CardBox title="Best Rating" />
-            <CardBox title="Just For You" />
+            <CardBox 
+                title="Latest" 
+                :items="item.latestItems"
+                @addToCart="addToCart" 
+                v-if="item.latestItems.length !== 0" 
+            />
+            <CardBox 
+                title="Popular Now" 
+                :items="item.popularItems"
+                @addToCart="addToCart"
+                v-if="item.popularItems.length !== 0" 
+            />
+            <CardBox 
+                title="Best Rating" 
+                :items="item.bestRatingItems"
+                @addToCart="addToCart"
+                v-if="item.bestRatingItems.length !== 0"
+            />
         </section>
         <section
             class="w-screen md:h-96 sm:h-half h-auto z-0 mt-6 sm:mt-0
@@ -66,7 +80,38 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useItemStore } from '@/stores/item';
+import { useAuthStore } from '@/stores/auth';
+import { useOrderStore } from '@/stores/order';
+import { Toast } from '@/services/alert';
+import type { CartData } from '@/types/order';
 import CardBox from '../components/home/CardBox.vue';
 import Footer from '@/components/Footer.vue';
+
+const router = useRouter();
+
+const item = useItemStore();
+const auth = useAuthStore();
+const order = useOrderStore();
+
+const addToCart= async(id: number) => {
+    if(auth.isAuthenticated){
+        let cartData: CartData = { id: id, quantity: 1 };
+        await order.addItemsToCart(cartData);
+        Toast.fire({
+            icon: 'success',
+            title: 'Added item to card.'
+        });
+    }else{
+        router.push({ path: '/login'});
+    }
+}
+
+onMounted(() => {
+    item.getLatestItems();
+    item.getPopularItems();
+});
 
 </script>

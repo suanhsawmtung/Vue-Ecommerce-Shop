@@ -62,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
+import { computed } from 'vue';
 import type { Items, Datum } from '@/types/shop';
 
 const props = defineProps<{
@@ -82,9 +82,6 @@ const links = computed(() => {
     return props.data.links.slice(1, (props.data.links.length-1));
 });
 
-onMounted(() => {
-    console.log(props);
-})
 
 </script>
 

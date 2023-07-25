@@ -28,7 +28,8 @@ export const useOrderStore = defineStore('order', {
     actions: {
         async addItemsToCart(cartData: CartData){
             try{
-                await axios.post('/shop/addItemsToCart', cartData);
+                const { data } = await axios.post('/shop/addItemsToCart', cartData);
+                this.cartItems.push(data.item);
             }catch(error){
                 console.log(error);
             }

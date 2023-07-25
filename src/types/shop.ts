@@ -2,6 +2,9 @@
 
 export interface PaginatedItemsData {
     PaginatedItems: Items ;
+    latestItems: Datum[],
+    popularItems: Datum[],
+    bestRatingItems: Datum[],
     categories: Category[];
     categoryStatus: string;
 }

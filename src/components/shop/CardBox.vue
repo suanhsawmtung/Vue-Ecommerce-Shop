@@ -54,7 +54,7 @@
                                         Only {{ item.count }} left.
                                     </small> -->
                                 </span>
-                                <span class="text-sm">{{ item.count }}</span>
+                                <span class="text-sm">{{ item.count }} left.</span>
                             </div>
                             <span 
                                 @click="$emit('addToCart', item.id)"

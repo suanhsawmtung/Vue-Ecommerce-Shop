@@ -20,7 +20,6 @@
             <div class="flex justify-between items-center w-72 ">
                 <div class="relative ">
                     <span 
-                        @mouseenter="categoryDropdown = true" @mouseleave="categoryDropdown = false"
                         @click="categoryDropdown = !categoryDropdown" 
                         class="hover:text-blue-700 cursor-pointer text-white flex items-center"
                     >
@@ -28,8 +27,8 @@
                     </span>
                     <div 
                         v-if="categoryDropdown"
-                        @mouseenter="categoryDropdown = true" @mouseleave="categoryDropdown = false"
-                        class="absolute top-4 -right-12 flex items-end h-[220px] w-[200px]"
+                        @mouseleave="categoryDropdown = false"
+                        class="absolute top-4 sm:-right-12 -right-16 flex items-end h-[220px] w-[200px]"
                     >
                         <ul class="h-[200px] w-[200px] overflow-y-auto shadow-md border z-10" >
                             <li 
@@ -42,13 +41,14 @@
                         </ul>
                     </div>
                 </div>
-                <div class="relative cursor-pointer" @click="$router.push({ path: '/cart' })">
+                <div class="relative cursor-pointer" @click="router.push({ path: '/cart' })">
                     <div 
-                        v-if="badgeStatus"
+                        v-if="order.cartItems.length !== 0"
                         class="absolute inline-flex items-center justify-center 
-                        w-4 h-4 text-xs font-bold text-white bg-red-500 border-2 border-white 
+                        w-5 h-5 text-xs font-bold text-white bg-red-500 border-2 border-white 
                         rounded-full -top-2 -right-2 dark:border-gray-900"
                     >
+                        {{ order.cartItems.length }}
                     </div>
                     <span class="material-icons text-white">shopping_cart_checkout</span>
                 </div>
@@ -70,16 +70,16 @@
 </template>
 
 <script setup lang="ts">
-import Footer from '../components/Footer.vue';
-import CardBox from '../components/shop/CardBox.vue';
-import Paginator from '@/components/Paginator.vue';
 import { ref, onMounted } from 'vue';
-import type { CartData } from '@/types/order';
+import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import { useItemStore } from '@/stores/item';
 import { useOrderStore } from '@/stores/order';
 import { Toast } from '@/services/alert';
-import { useRouter } from 'vue-router';
+import type { CartData } from '@/types/order';
+import Footer from '../components/Footer.vue';
+import CardBox from '../components/shop/CardBox.vue';
+import Paginator from '@/components/Paginator.vue';
 
 const auth = useAuthStore();
 const item = useItemStore();
@@ -88,7 +88,6 @@ const router = useRouter();
 
 const searchKey = ref<string>('');
 let categoryDropdown = ref<boolean>(false);
-const badgeStatus = ref<boolean>(false);
 
 const submitSearchForm = () => {
     if(searchKey.value !== '') item.getSearchItems(searchKey.value);
@@ -99,8 +98,6 @@ const addToCart= async(id: number) => {
     if(auth.isAuthenticated){
         let cartData: CartData = { id: id, quantity: 1 };
         await order.addItemsToCart(cartData);
-        badgeStatus.value = true;
-        localStorage.setItem('cart', 'exist');
         Toast.fire({
             icon: 'success',
             title: 'Added item to card.'
@@ -110,16 +107,10 @@ const addToCart= async(id: number) => {
     }
 }
 
-const badge = () => {
-    if(localStorage.getItem('cart')) badgeStatus.value = true;
-    else badgeStatus.value = false;
-}
-
-
 onMounted(async() => {
     await item.getAllItems();
     await item.getAllCategories();
-    badge();
+    await order.getAllCartItems();
 })
 
 </script>

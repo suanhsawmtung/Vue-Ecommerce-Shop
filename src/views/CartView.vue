@@ -65,13 +65,15 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { Modal, Toast } from '@/services/alert';
+import { useAuthStore } from '@/stores/auth';
 import { useOrderStore } from '@/stores/order';
+import { Modal, Toast } from '@/services/alert';
 import type { CartItem, CartItemActionTerm } from '@/types/order';
 import OrderModal from '@/components/order/OrderModal.vue';
 import CartList from '@/components/order/CartList.vue';
 
 const router = useRouter();
+const auth = useAuthStore();
 const order = useOrderStore();
 
 const isOrdered = ref<boolean>(false);
@@ -118,9 +120,8 @@ const deleteCartItem = (id: number) => {
     })
 }
 
-onMounted(() => {
-    order.getAllCartItems();
-    if(localStorage.getItem('cart')) localStorage.removeItem('cart');
+onMounted(async() => {
+    await order.getAllCartItems();
 })
 
 </script>

@@ -25,59 +25,30 @@
                 :modules="modules"
                 class="mySwiper"
             >
-                <SwiperSlide>
-                    <div class="flex justify-center items-center pb-8">
+                <SwiperSlide v-for="(item, index) in items" :key="index">
+                    <div class="flex justify-center items-center pb-8 hover:scale-105 duration-150 cursor-pointer">
                         <div class="sm:w-52 sm:h-60 w-40 h-52 drop-shadow-md mb-4 rounded-lg overflow-hidden">
-                            <div class="sm:w-52 w-40 sm:h-40 h-36 bg-red-100"></div>
-                            <div class="w-52 h-20 bg-blue-200"></div>
-                        </div>
-                    </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <div class="flex justify-center items-center pb-8">
-                        <div class="sm:w-52 sm:h-60 w-40 h-52 drop-shadow-md mb-4 rounded-lg overflow-hidden">
-                            <div class="sm:w-52 w-40 sm:h-40 h-36 bg-red-100"></div>
-                            <div class="sm:w-52 w-40 sm:h-20 h-16 bg-blue-200"></div>
-                        </div>
-                    </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <div class="flex justify-center items-center pb-8">
-                        <div class="sm:w-52 sm:h-60 w-40 h-52 drop-shadow-md mb-4 rounded-lg overflow-hidden">
-                            <div class="sm:w-52 w-40 sm:h-40 h-36 bg-red-100"></div>
-                            <div class="sm:w-52 w-40 sm:h-20 h-16 bg-blue-200"></div>
-                        </div>
-                    </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <div class="flex justify-center items-center pb-8">
-                        <div class="sm:w-52 sm:h-60 w-40 h-52 drop-shadow-md mb-4 rounded-lg overflow-hidden">
-                            <div class="sm:w-52 w-40 sm:h-40 h-36 bg-red-100"></div>
-                            <div class="sm:w-52 w-40 sm:h-20 h-16 bg-blue-200"></div>
-                        </div>
-                    </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <div class="flex justify-center items-center pb-8">
-                        <div class="sm:w-52 sm:h-60 w-40 h-52 drop-shadow-md mb-4 rounded-lg overflow-hidden">
-                            <div class="sm:w-52 w-40 sm:h-40 h-36 bg-red-100"></div>
-                            <div class="sm:w-52 w-40 sm:h-20 h-16 bg-blue-200"></div>
-                        </div>
-                    </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <div class="flex justify-center items-center pb-8">
-                        <div class="sm:w-52 sm:h-60 w-40 h-52 drop-shadow-md mb-4 rounded-lg overflow-hidden">
-                            <div class="sm:w-52 w-40 sm:h-40 h-36 bg-red-100"></div>
-                            <div class="sm:w-52 w-40 sm:h-20 h-16 bg-blue-200"></div>
-                        </div>
-                    </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <div class="flex justify-center items-center pb-8">
-                        <div class="sm:w-52 sm:h-60 w-40 h-52 drop-shadow-md mb-4 rounded-lg overflow-hidden">
-                            <div class="sm:w-52 w-40 sm:h-40 h-36 bg-red-100"></div>
-                            <div class="sm:w-52 w-40 sm:h-20 h-16 bg-blue-200"></div>
+                            <div class="sm:w-52 w-40 sm:h-40 h-36 bg-white">
+                                <img 
+                                    :src="'http://localhost:8000/storage/products/' + item.image" 
+                                    class="w-full h-full object-contain" alt=""
+                                >
+                            </div>
+                            <div class="w-full h-20 bg-blue-200 p-2">
+                                <p class="overflow-hidden whitespace-nowrap text-sm">{{ item.title }}</p>
+                                <div class="flex justify-between items-center sm:mt-3 mt-1">
+                                    <span class="text-sm text-orange-500">
+                                        {{ item.price }} Ks
+                                    </span>
+                                    <span 
+                                        @click="$emit('addToCart', item.id)"
+                                        class="w-6 h-6 bg-white hover:scale-105 active:scale-75 duration-150
+                                            flex justify-center items-center rounded-full cursor-pointer"
+                                    >
+                                        <i class="material-icons text-base">add_shopping_cart</i>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </SwiperSlide>
@@ -98,9 +69,11 @@ import { FreeMode, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
+import { Datum } from '@/types/shop';
 
 defineProps<{
     title?: String,
+    items?: Datum[]
 }>();
 
 const modules = [ FreeMode, Pagination ];
