@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth';
+import { Toast } from '@/services/alert';
+import { getTokenFromCookie } from '@/services/cookie';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -48,18 +50,35 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  
   const auth = useAuthStore();
 
-  if(!auth.isAuthenticated && localStorage.getItem("token")){
-    auth.getLoginUser();
-  }
+  if(!auth.isAuthenticated && getTokenFromCookie()) auth.getLoginUser();
 
-  if (
-    to.name === 'cart' &&
-    !auth.isAuthenticated && 
-    !localStorage.getItem('token')
-  ) next({ name: 'login' })
-  else next()
+  if(to.name === 'login' && getTokenFromCookie()) next({ name: 'home' });
+
+  else if(to.name === 'register' && getTokenFromCookie()) next({ name: 'home' });
+
+  else if(to.name === 'cart' && !getTokenFromCookie()){ 
+
+    next({ name: 'login' });
+
+    Toast.fire({
+      icon: 'info',
+      title: 'Please login first.'
+    });
+
+  }else if( to.name === 'order' && !getTokenFromCookie()){ 
+
+    next({ name: 'login' });
+
+    Toast.fire({
+      icon: 'info',
+      title: 'Please login first.'
+    });
+
+  }else next();
+  
 })
 
 export default router

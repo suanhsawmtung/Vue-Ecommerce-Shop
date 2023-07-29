@@ -1,13 +1,17 @@
 <template>
     <div class="w-screen relative overflow-x-hidden">
         <div 
+            v-if="order.orders.length !== 0"
             class="w-full flex items-center p-5 mt-16"
         >
             <h3 class="text-xl font-extrabold">
                 Your Orders
             </h3>
         </div>
-        <div class="relative overflow-x-auto">
+        <div 
+            v-if="order.orders.length !== 0"
+            class="relative overflow-x-auto"
+        >
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -47,7 +51,18 @@
                             <!-- {{ o.created_at.getTime() }} -->
                         </td>
                         <td class="px-6 py-4">
-                            <span v-if="o.status === 0" class="text-yellow-300">Pending</span>
+                            <span v-if="o.status === OrderStatus.Pending" class="text-yellow-300 font-bold">
+                                Pending
+                            </span>
+                            <span 
+                                v-if="o.status === OrderStatus.Accepted || o.status === OrderStatus.Paid" 
+                                class="text-blue-500 font-bold"
+                            >
+                                Accepted
+                            </span>
+                            <span v-if="o.status === OrderStatus.Done" class="text-gray-500 font-bold">
+                                Done
+                            </span>
                         </td>
                         <td class="px-6 py-4">
                             <button @click="orderDetail(o.order_code)"
@@ -61,6 +76,20 @@
                 </tbody>
             </table>
         </div>
+        <div 
+            v-if="order.orders.length === 0"
+            class="w-full h-screen flex flex-col justify-center items-center gap-y-4"
+        >
+            <h3 class="text-xl font-extrabold" >
+                No Orders.
+            </h3>
+            <button 
+                @click="router.push({ path: '/shop' })"
+                class="w-64 sm:w-96 py-2 px-3 bg-white hover:bg-blue-200 font-bold border border-1 border-black"
+            >
+                Continue Shopping
+            </button>
+        </div>
     </div>
 </template>
 
@@ -68,7 +97,7 @@
 import { onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useOrderStore } from '@/stores/order';
-import type { OrderElement } from '@/types/order';
+import { OrderElement, OrderStatus } from '@/types/order';
 
 const router = useRouter();
 const order = useOrderStore();

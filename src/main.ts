@@ -1,4 +1,5 @@
 import './assets/style.css'
+import '@/services/cookie'
 import '@/services/axios'
 
 import { createApp } from 'vue'

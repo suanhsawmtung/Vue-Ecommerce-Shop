@@ -52,12 +52,6 @@
                         Home
                     </li>
                     <li 
-                        @click="$router.push({ path: '/about'})" 
-                        class="mb-2 text-md font-normal text-slate-500 cursor-pointer"
-                    >
-                        About
-                    </li>
-                    <li 
                         @click="$router.push({ path: '/shop'})" 
                         class="mb-2 text-md font-normal text-slate-500 cursor-pointer"
                     >

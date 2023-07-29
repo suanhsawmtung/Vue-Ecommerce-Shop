@@ -104,6 +104,10 @@ const addToCart= async(id: number) => {
         });
     }else{
         router.push({ path: '/login'});
+        Toast.fire({
+            icon: 'info',
+            title: 'Please login first.'
+        });
     }
 }
 

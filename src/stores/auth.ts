@@ -40,6 +40,21 @@ export const useAuthStore = defineStore('auth', {
             const { data } = await axios.get('/user/getProfileData');
             this.user = data.user;
             this.isAuthenticated = true;
+        },
+        async loginWithGoogle(){
+            location.href = 'http://localhost:8000/api/auth/google/redirect';
+        },
+        async loginWithFacebook(){
+            location.href = 'http://localhost:8000/api/auth/facebook/redirect';
+        },
+        async providerLogin(email: string | string []){
+            try{
+                const { data } = await axios.get(`/auth/provider/login/${email}`);
+                this.user = data.user;
+                this.isAuthenticated = true;
+            }catch(error){
+                console.log(error);
+            }
         }
     }
 })

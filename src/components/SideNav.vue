@@ -87,9 +87,10 @@
 </template>
 
 <script setup lang="ts">
+import { RouterLink, useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import { Toast } from '@/services/alert';
-import { RouterLink, useRouter } from 'vue-router';
+import { removeTokenFromCookie } from '@/services/cookie';
 
 const auth = useAuthStore();
 const router = useRouter();
@@ -99,7 +100,7 @@ const emit = defineEmits(['toggleSideBar']);
 const accLogout = async() => {
     await auth.logout();
     if(!auth.isAuthenticated){
-        localStorage.removeItem("token"); 
+        removeTokenFromCookie(); 
         emit('toggleSideBar');
         router.push({ path: '/login' });
         setTimeout(() => {

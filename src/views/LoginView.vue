@@ -59,8 +59,8 @@
             <div class="text-center text-sm">_____ OR _____</div>
             
             <div class="flex flex-col gap-4">
-                <a 
-                    href="#" 
+                <button
+                    @click="auth.loginWithGoogle" 
                     class="py-2 px-3 bg-red-700 text-white hover:bg-red-800 text-center
                         focus:ring-4 focus:ring-red-300 dark:bg-red-600 w-full
                         dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
@@ -68,9 +68,9 @@
                     <span class="text-sm font-bold">
                         Login with Google
                     </span>
-                </a>
-                <a 
-                    href="#" 
+                </button>
+                <button 
+                    @click="auth.loginWithFacebook"
                     class="py-2 px-3 bg-blue-700 text-white hover:bg-blue-800 text-center
                         focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 w-full
                         dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
@@ -78,7 +78,7 @@
                     <span class="text-sm font-bold">
                         Login with Facebook
                     </span>
-                </a>
+                </button>
             </div>
         
         </div>
@@ -86,17 +86,19 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, computed } from 'vue';
-import { RouterLink, useRouter } from 'vue-router';
+import { reactive, computed, onMounted } from 'vue';
+import { RouterLink, useRouter, useRoute } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import { Toast } from '@/services/alert';
-import setAuthToken from '@/services/axios';
+import { setAuthToken } from '@/services/axios';
+import { saveTokenToCookie } from '@/services/cookie';
 import useVuelidate from '@vuelidate/core';
 import { required, email, minLength } from '@vuelidate/validators';
 import BaseInput from '@/components/BaseInput.vue';
 
 const auth = useAuthStore();
 const router = useRouter();
+const route = useRoute();
 
 const loginFormData = reactive({
     email: "",
@@ -118,7 +120,7 @@ const submitLoginForm = async() => {
     if(result){
         await auth.login(loginFormData);
         if(auth.isAuthenticated){
-            localStorage.setItem("token", auth.user.token);
+            saveTokenToCookie(auth.user.token);
             setAuthToken();
             router.push({ path: '/' });
             setTimeout(() => {
@@ -130,5 +132,22 @@ const submitLoginForm = async() => {
         }
     }
 }
+
+onMounted(async () => {
+    if(route.query.email){
+        await auth.providerLogin(route.query.email);
+        if(auth.isAuthenticated) {
+        saveTokenToCookie(auth.user.token);
+        setAuthToken();
+        router.push({ path: '/' });
+        setTimeout(() => {
+            Toast.fire({
+                icon: 'success',
+                title: 'Welcome to vue shop...'
+            });
+        }, 300);
+    }
+    }
+})
 
 </script>

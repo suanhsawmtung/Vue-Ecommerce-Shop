@@ -89,7 +89,8 @@
 import { reactive, computed } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { Toast } from '@/services/alert';
-import setAuthToken from '@/services/axios';
+import { setAuthToken } from '@/services/axios';
+import { saveTokenToCookie } from '@/services/cookie';
 import { RouterLink, useRouter } from 'vue-router';
 import useVuelidate from '@vuelidate/core';
 import { required, email, minLength, maxLength, sameAs } from '@vuelidate/validators';
@@ -122,7 +123,7 @@ const submitRegisterForm = async() => {
     if(result){
         await auth.register(registerFormData);
         if(auth.isAuthenticated) {
-            localStorage.setItem("token", auth.user.token); 
+            saveTokenToCookie(auth.user.token ); 
             setAuthToken();
             router.push({ path: '/' });
             setTimeout(() => {

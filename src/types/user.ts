@@ -11,6 +11,7 @@ export interface User {
     email:      string;
     phone:      string;
     role:       string;
+    avatar:     string;
     updated_at: string;
     created_at: string;
     id:         number;

@@ -66,8 +66,8 @@
             <ul class="flex justify-between items-center sm:gap-x-6 gap-x-4">
                 <li 
                     v-if="auth.isAuthenticated"
-                    class="w-7 h-7 sm:w-8 sm:h-8 uppercase bg-blue-200 rounded-full 
-                        cursor-pointer font-bold flex justify-center items-center"
+                    class="w-7 h-7 sm:w-8 sm:h-8 font-bold uppercase bg-blue-200 rounded-full 
+                        cursor-pointer flex justify-center items-center overflow-hidden"
                 >
                     {{ auth.user.name.charAt(0) }}
                 </li>
@@ -84,9 +84,10 @@
 <script setup lang="ts">
 
 import { ref } from 'vue';
+import { RouterLink, useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import { Toast } from '@/services/alert';
-import { RouterLink, useRouter } from 'vue-router';
+import { removeTokenFromCookie } from '@/services/cookie';
 
 const auth = useAuthStore();
 const router = useRouter();
@@ -101,7 +102,7 @@ window.addEventListener('resize', function(){
 const accLogout = async() => {
     await auth.logout();
     if(!auth.isAuthenticated){
-        localStorage.removeItem("token"); 
+        removeTokenFromCookie();
         router.push({ path: '/login' });
         setTimeout(() => {
             Toast.fire({
