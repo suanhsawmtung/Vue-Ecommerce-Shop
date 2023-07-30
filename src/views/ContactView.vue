@@ -26,10 +26,11 @@
                     <header class="font-bold text-xl">Get In Touch</header>
                     <FormKit 
                         type="form" 
-                        @submit="submitForm"
-                        submit-label="Send Mail"
+                        id="contactForm"
+                        @submit="submitContactForm"
+                        submit-label="Submit"
                         :submit-attrs="{
-                            inputClass: 'w-full py-2 px-3 bg-blue-400 text-white hover:bg-blue-500 font-bold'
+                            inputClass: 'w-full py-2 px-3 bg-blue-400 text-white hover:bg-blue-500 font-bold active:scale-95 duration-150'
                         }"
                         input-class="flex flex-col gap-4"
                     >
@@ -39,7 +40,7 @@
                                 label="Name" 
                                 name="name"
                                 placeholder="Enter name"
-                                validation="required"
+                                validation="required | length: 5"
                                 input-class="w-full py-2 px-3 border border-solid border-3 border-gray-400 bg-gray-50"  
                             />
                         </div>
@@ -82,10 +83,41 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
+import { reset } from '@formkit/core';
+import { useAuthStore } from '@/stores/auth';
+import { useContactStore } from '@/stores/contact';
+import { Toast } from '@/services/alert';
 import Footer from '../components/Footer.vue';
 
-const submitForm = (formData: FormData) => {
-    console.log(formData);
+const router = useRouter();
+const auth = useAuthStore();
+const contact = useContactStore();
+
+const submitContactForm = (formData: FormData) => {
+    if(auth.isAuthenticated){
+        contact.sendMessageToAdminTeam(formData)
+        .then(res => {
+            if(res === 'success'){
+                reset('contactForm', '');
+                toastAlert('success', 'Sent message successfully...');
+            }else{
+                toastAlert('error', 'Sending message fails...');
+            }
+        }).catch(err => {
+            toastAlert('error', 'Sending message fails...');
+        });
+    }else{
+        router.push({ path: '/login' });
+        toastAlert('info', 'Please login first.');
+    }
 } 
+
+const toastAlert = (Icon: any, Title: any) => {
+    Toast.fire({
+        icon: Icon,
+        title: Title
+    });
+}
 
 </script>

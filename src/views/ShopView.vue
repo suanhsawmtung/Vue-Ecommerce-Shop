@@ -103,7 +103,7 @@ const addToCart= async(id: number) => {
             title: 'Added item to card.'
         });
     }else{
-        router.push({ path: '/login'});
+        router.push({ path: '/login' });
         Toast.fire({
             icon: 'info',
             title: 'Please login first.'

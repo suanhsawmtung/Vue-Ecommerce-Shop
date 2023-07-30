@@ -14,7 +14,7 @@
                         nam dolores provident temporibus commodi quidem!
                     </p>
                     <button 
-                        @click="$router.push({ path: '/shop' })"
+                        @click="router.push({ path: '/shop' })"
                         class="bg-blue-700 shadow-sm text-white p-2 w-52 rounded-md flex items-center justify-center gap-x-2"
                     >
                         Shop Now
@@ -61,7 +61,7 @@
                         ullam vitae sapiente?
                     </p>
                     <button 
-                        @click="$router.push({ path: '/contact' })"
+                        @click="router.push({ path: '/contact' })"
                         class="bg-blue-700 shadow-sm text-white p-2 w-52 rounded-md flex items-center justify-center gap-x-2"
                     >
                         Get in touch
@@ -105,7 +105,7 @@ const addToCart= async(id: number) => {
             title: 'Added item to card.'
         });
     }else{
-        router.push({ path: '/login'});
+        router.push({ path: '/login' });
         Toast.fire({
             icon: 'info',
             title: 'Please login first.'
