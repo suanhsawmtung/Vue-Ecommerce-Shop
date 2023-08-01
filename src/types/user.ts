@@ -32,3 +32,18 @@ export interface LoginFormData{
     password: string;
 }
 
+export interface EmailVerificationFormData{
+    email: string;
+}
+
+export interface ResetPasswordFormData{
+    token: string;
+    email: string;
+    password: string;
+    password_confirmation: string;
+}
+
+export interface UserAccountOperationData{
+    email_verification_token: string;
+}
+

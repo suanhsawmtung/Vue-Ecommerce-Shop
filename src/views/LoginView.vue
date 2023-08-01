@@ -52,7 +52,9 @@
                     here.
                 </span>
                 <span class="text-xs">
-                    <a href="#" class="text-blue-700 active:text-blue-300">Forgot Password?</a>
+                    <RouterLink to="/forgotPassword/emailVerification" class="text-blue-700 active:text-blue-300">
+                        Forgot Password?
+                    </RouterLink>
                 </span>
             </div>
             
@@ -119,34 +121,26 @@ const submitLoginForm = async() => {
     const result = await v$.value.$validate();
     if(result){
         await auth.login(loginFormData);
-        if(auth.isAuthenticated){
-            saveTokenToCookie(auth.user.token);
-            setAuthToken();
-            router.push({ path: '/' });
-            setTimeout(() => {
-                Toast.fire({
-                    icon: 'success',
-                    title: 'Welcome to vue shop...'
-                });
-            }, 300);
-        }
+        if(auth.isAuthenticated) loginFinished();
     }
+}
+
+const loginFinished = () => {
+    saveTokenToCookie(auth.user.token);
+    setAuthToken();
+    router.push({ path: '/' });
+    setTimeout(() => {
+        Toast.fire({
+            icon: 'success',
+            title: 'Welcome to vue shop...'
+        });
+    }, 300);
 }
 
 onMounted(async () => {
     if(route.query.email){
         await auth.providerLogin(route.query.email);
-        if(auth.isAuthenticated) {
-        saveTokenToCookie(auth.user.token);
-        setAuthToken();
-        router.push({ path: '/' });
-        setTimeout(() => {
-            Toast.fire({
-                icon: 'success',
-                title: 'Welcome to vue shop...'
-            });
-        }, 300);
-    }
+        if(auth.isAuthenticated) loginFinished();
     }
 })
 

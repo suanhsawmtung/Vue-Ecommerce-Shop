@@ -7,7 +7,7 @@ export const useItemStore = defineStore('item', {
         PaginatedItems: <Items>{},
         latestItems: <Datum[]>[],
         popularItems: <Datum[]>[],
-        bestRatingItems: <Datum>[],
+        bestRatingItems: <Datum[]>[],
         categories: <Category[]>[],
         categoryStatus: 'All',
     }),

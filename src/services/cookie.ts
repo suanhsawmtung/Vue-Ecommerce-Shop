@@ -11,3 +11,15 @@ export function getTokenFromCookie(){
 export function removeTokenFromCookie(){
     Cookies.remove('_token');
 }
+
+export function saveToCookie(key: string, value: string){
+    Cookies.set(key, value);
+}
+
+export function getFromCookie(key: string){
+    return Cookies.get(key);
+}
+
+export function removeFromCookie(key: string){
+    Cookies.remove(key);
+}

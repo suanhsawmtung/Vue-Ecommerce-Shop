@@ -39,7 +39,7 @@
                 title="Popular Now" 
                 :items="item.popularItems"
                 @addToCart="addToCart"
-                v-if="item.popularItems.length !== 0" 
+                v-if="item.popularItems.length > 4" 
             />
             <CardBox 
                 title="Best Rating" 

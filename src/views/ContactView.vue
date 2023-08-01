@@ -21,12 +21,13 @@
                     </ul>
                 </div>
             </div>
-            <div class="w-full lg:w-3/6 h-auto sm:h-full py-12 sm:py-0 sm:pt-12 flex justify-center items-center">
-                <div class="p-5 rounded-sm bg-white flex flex-col gap-3 w-[340px] sm:w-[400px] shadow-lg ">
+            <div class="w-full lg:w-3/6 h-auto sm:h-full py-12 sm:py-0 sm:pt-6 md:pt-12 flex justify-center items-center">
+                <div class="p-5 rounded-sm bg-white mb-12 lg:mb-0 flex flex-col gap-3 w-[340px] sm:w-[400px] shadow-lg ">
                     <header class="font-bold text-xl">Get In Touch</header>
                     <FormKit 
                         type="form" 
                         id="contactForm"
+                        :disabled="disable"
                         @submit="submitContactForm"
                         submit-label="Submit"
                         :submit-attrs="{
@@ -37,7 +38,8 @@
                         <div class="mb-3">
                             <FormKit 
                                 type="text" 
-                                label="Name" 
+                                label="Name"
+                                :disabled="disable" 
                                 name="name"
                                 placeholder="Enter name"
                                 validation="required | length: 5"
@@ -48,6 +50,7 @@
                             <FormKit 
                                 type="email" 
                                 label="Email" 
+                                :disabled="disable"
                                 name="email"
                                 validation="required | email"
                                 placeholder="Enter email"
@@ -58,6 +61,7 @@
                             <FormKit 
                                 type="text" 
                                 label="Phone" 
+                                :disabled="disable"
                                 name="phone"
                                 validation="required | length: 9, 15"
                                 placeholder="Enter phone number"
@@ -68,6 +72,7 @@
                             <FormKit 
                                 type="textarea" 
                                 label="Message" 
+                                :disabled="disable"
                                 name="message"
                                 validation="required"
                                 placeholder="Enter message"
@@ -83,6 +88,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { reset } from '@formkit/core';
 import { useAuthStore } from '@/stores/auth';
@@ -94,8 +100,11 @@ const router = useRouter();
 const auth = useAuthStore();
 const contact = useContactStore();
 
+const disable = ref<boolean>(false);
+
 const submitContactForm = (formData: FormData) => {
     if(auth.isAuthenticated){
+        disable.value = true;
         contact.sendMessageToAdminTeam(formData)
         .then(res => {
             if(res === 'success'){
@@ -118,6 +127,8 @@ const toastAlert = (Icon: any, Title: any) => {
         icon: Icon,
         title: Title
     });
+
+    disable.value = false;
 }
 
 </script>

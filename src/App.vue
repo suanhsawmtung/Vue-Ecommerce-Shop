@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterLink, RouterView, useRoute } from 'vue-router';
 import TopNav from './components/TopNav.vue';
 import SideNav from './components/SideNav.vue';
+
+const route = useRoute();
 
 const sideBarStatus = ref<Boolean>(false);
 
@@ -10,7 +12,10 @@ const sideBarStatus = ref<Boolean>(false);
 
 <template>
     <!-- Top Navigation Bar -->
-    <TopNav @toggleSideBar="sideBarStatus = !sideBarStatus" />
+    <TopNav 
+        v-if="route.name !== 'forgotPassword'"
+        @toggleSideBar="sideBarStatus = !sideBarStatus" 
+    />
 
     <!-- Side Navigation Bar -->
     <Transition name="side-nav">
