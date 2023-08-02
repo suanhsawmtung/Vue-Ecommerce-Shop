@@ -68,7 +68,7 @@ import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import { useOrderStore } from '@/stores/order';
 import { Modal, Toast } from '@/services/alert';
-import type { CartItem, CartItemActionTerm } from '@/types/order';
+import type { CartItem, CartItemActionTerm, OrderFormDataType } from '@/types/order';
 import OrderModal from '@/components/order/OrderModal.vue';
 import CartList from '@/components/order/CartList.vue';
 
@@ -90,7 +90,7 @@ const changeQuantity = (item: CartItem, action: CartItemActionTerm) => {
 
 }
 
-const submitOrder = async (formData: FormData) => {
+const submitOrder = async (formData: OrderFormDataType) => {
     await order.orderCheckout(formData);
     isOrdered.value = false;
     router.push({ name: 'shop' });;

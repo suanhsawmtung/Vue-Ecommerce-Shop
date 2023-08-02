@@ -35,6 +35,7 @@
             <div 
                 class="flex justify-center items-center hover:scale-105 duration-150 cursor-pointer" 
                 v-for="(item, index) in items" :key="index"
+                @click="router.push({ path: `/item/${item.id}` })"
             >
                 <div class="w-52 h-60 drop-shadow-md mb-4 rounded-lg overflow-hidden">
                     <div class="w-full h-40 bg-white overflow-hidden">
@@ -50,14 +51,10 @@
                             <div class="flex flex-col">
                                 <span class="text-sm text-orange-500">
                                     {{ item.price }} Ks
-                                    <!-- <small v-if="item.count <= 5" class="ms-1 text-slate-500">
-                                        Only {{ item.count }} left.
-                                    </small> -->
                                 </span>
                                 <span class="text-sm">{{ item.count }} left.</span>
                             </div>
                             <span 
-                                @click="$emit('addToCart', item.id)"
                                 class="w-8 h-8 bg-white hover:scale-105 active:scale-75 duration-150
                                     flex justify-center items-center rounded-full cursor-pointer"
                             >
@@ -72,11 +69,14 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
 import type { Datum } from '@/types/shop';
 
 defineProps<{
     items?: Datum[],
     categoryStatus?: string,
 }>();
+
+const router = useRouter();
 
 </script>

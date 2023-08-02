@@ -57,7 +57,6 @@
         <CardBox 
             :items="item.items" 
             :categoryStatus="item.categoryStatus"
-            @addToCart="addToCart"
             @getAllItems="item.getAllItems"
         />
         <Paginator 
@@ -92,23 +91,6 @@ let categoryDropdown = ref<boolean>(false);
 const submitSearchForm = () => {
     if(searchKey.value !== '') item.getSearchItems(searchKey.value);
     else item.getAllItems();
-}
-
-const addToCart= async(id: number) => {
-    if(auth.isAuthenticated){
-        let cartData: CartData = { id: id, quantity: 1 };
-        await order.addItemsToCart(cartData);
-        Toast.fire({
-            icon: 'success',
-            title: 'Added item to card.'
-        });
-    }else{
-        router.push({ path: '/login' });
-        Toast.fire({
-            icon: 'info',
-            title: 'Please login first.'
-        });
-    }
 }
 
 onMounted(async() => {

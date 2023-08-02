@@ -15,7 +15,7 @@ export const useAccountStore = defineStore('account', {
                 console.log(error);
             }
         },
-        async resetPassword(form: ResetPasswordFormData){
+        resetPassword(form: ResetPasswordFormData){
             return new Promise(async(resolve, reject) => {
                 await axios.post('/account/resetPassword', form)
                     .then(res => resolve(res.data.status))

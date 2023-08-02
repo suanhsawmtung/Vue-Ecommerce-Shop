@@ -22,7 +22,7 @@ const router = createRouter({
       component: () => import('../views/RegisterView.vue')
     },
     {
-      path: '/forgotPassword/:form',
+      path: '/forgot-password/:form',
       name: 'forgotPassword',
       component: () => import('../views/ForgotPasswordView.vue')
     },
@@ -32,14 +32,14 @@ const router = createRouter({
       component: () => import('../views/ShopView.vue')
     },
     {
+      path: '/item/:id',
+      name: 'itemDetail',
+      component: () => import('../views/ItemDetailView.vue')
+    },
+    {
       path: '/contact',
       name: 'contact',
       component: () => import('../views/ContactView.vue')
-    },
-    {
-      path: '/detail/:code',
-      name: 'detail',
-      component: () => import('../views/DetailView.vue')
     },
     {
       path: '/cart',
@@ -51,6 +51,16 @@ const router = createRouter({
       name: 'order',
       component: () => import('../views/OrderView.vue')
     },
+    {
+      path: '/order-detail/:code',
+      name: 'orderDetail',
+      component: () => import('../views/OrderDetailView.vue')
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'notFound',
+      component: () => import('../views/NotFoundView.vue')
+    },
   ]
 });
 
@@ -60,29 +70,24 @@ router.beforeEach((to, from, next) => {
 
   if(!auth.isAuthenticated && getTokenFromCookie()) auth.getLoginUser();
 
-  if(to.name === 'login' && getTokenFromCookie()) next({ name: 'home' });
+  if(to.name === 'login' || to.name === 'register' || to.name === 'forgotPassword'){
+    if(getTokenFromCookie()) next({ name: 'home' });
+    else next();
+  }
 
-  else if(to.name === 'register' && getTokenFromCookie()) next({ name: 'home' });
+  else if(to.name === 'cart' || to.name === 'order' || to.name === 'orderDetail'){
+    if(getTokenFromCookie()) next();
+    else {
+      next({ name: 'login' });
 
-  else if(to.name === 'cart' && !getTokenFromCookie()){ 
+      Toast.fire({
+        icon: 'info',
+        title: 'Please login first.'
+      });
+    }
+  }
 
-    next({ name: 'login' });
-
-    Toast.fire({
-      icon: 'info',
-      title: 'Please login first.'
-    });
-
-  }else if( to.name === 'order' && !getTokenFromCookie()){ 
-
-    next({ name: 'login' });
-
-    Toast.fire({
-      icon: 'info',
-      title: 'Please login first.'
-    });
-
-  }else next();
+  else next();
   
 })
 

@@ -111,7 +111,7 @@ const TotalOrderItems = (o: OrderElement): number => {
 }
 
 const orderDetail = async(code: string) => {
-    router.push({ path: `/detail/${code}` });
+    router.push({ path: `/order-detail/${code}` });
 }
 
 onMounted(() => {

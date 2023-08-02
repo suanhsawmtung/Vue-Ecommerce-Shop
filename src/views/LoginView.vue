@@ -52,7 +52,7 @@
                     here.
                 </span>
                 <span class="text-xs">
-                    <RouterLink to="/forgotPassword/emailVerification" class="text-blue-700 active:text-blue-300">
+                    <RouterLink to="/forgot-password/email-verification" class="text-blue-700 active:text-blue-300">
                         Forgot Password?
                     </RouterLink>
                 </span>

@@ -31,7 +31,7 @@ export interface Product {
 }
 
 export interface CartData {
-    id: number;
+    id: number | string | string[];
     quantity: number;
 }
 
@@ -55,6 +55,19 @@ export interface OrderElement {
     created_at:  string;
     updated_at:  string;
     order_list:  OrderList[];
+}
+
+export interface OrderFormDataType {
+    phone:   string;
+    address: string;
+}
+
+export interface BuyNowFormDataType{
+    phone: string,
+    address: string,
+    product_id: number,
+    quantity: number,
+    total: number,
 }
 
 export interface OrderList {

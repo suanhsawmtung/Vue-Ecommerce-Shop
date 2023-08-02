@@ -26,7 +26,11 @@
                 class="mySwiper"
             >
                 <SwiperSlide v-for="(item, index) in items" :key="index">
-                    <div class="flex justify-center items-center pb-8 hover:scale-105 duration-150 cursor-pointer">
+                    <div 
+                        @click="router.push({ path: `/item/${item.id}`})"
+                        class="flex justify-center items-center pb-8 cursor-pointer
+                            hover:scale-105 duration-150 active:scale-95"
+                    >
                         <div class="sm:w-52 sm:h-60 w-40 h-52 drop-shadow-md mb-4 rounded-lg overflow-hidden">
                             <div class="sm:w-52 w-40 sm:h-40 h-36 bg-white">
                                 <img 
@@ -41,7 +45,6 @@
                                         {{ item.price }} Ks
                                     </span>
                                     <span 
-                                        @click="$emit('addToCart', item.id)"
                                         class="w-6 h-6 bg-white hover:scale-105 active:scale-75 duration-150
                                             flex justify-center items-center rounded-full cursor-pointer"
                                     >
@@ -59,6 +62,8 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
+
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from 'swiper/vue';
 
@@ -75,6 +80,8 @@ defineProps<{
     title?: String,
     items?: Datum[]
 }>();
+
+const router = useRouter();
 
 const modules = [ FreeMode, Pagination ];
 

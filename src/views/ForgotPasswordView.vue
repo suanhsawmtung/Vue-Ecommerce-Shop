@@ -7,16 +7,16 @@
             <p class="text-xs">Please enter the account that you want to reset the password.</p>
             
             <EmailVerificationForm 
-                v-if="route.params.form === 'emailVerification'"
+                v-if="route.params.form === 'email-verification'"
                 @submitVerificationFormEmit="submitVerificationForm"
             />
 
             <ResePasswordForm 
-                v-if="route.params.form === 'resetPassword'"
+                v-if="route.params.form === 'reset-password'"
                 @submitResetFormEmit="submitResetForm"
             />
             
-            <div class="flex justify-between" v-if="route.params.form === 'emailVerification'">
+            <div class="flex justify-between" v-if="route.params.form === 'email-verification'">
                 <span class="text-xs">
                     <RouterLink to="/login" class="text-blue-700 active:text-blue-300">Go Back</RouterLink>
                 </span>
@@ -89,10 +89,10 @@ const submitResetForm = async(resetFormData: ResetPasswordFormData) => {
 
 onMounted(() => {
     if(
-        route.params.form === 'resetPassword' && 
+        route.params.form === 'reset-password' && 
         route.query.token !== getFromCookie('verification_token')
     ){
-        router.push({ path: '/forgotPassword/emailVerification' });
+        router.push({ path: '/forgot-password/email-verification' });
         setTimeout(() => {
             Toast.fire({
                 icon: 'info',

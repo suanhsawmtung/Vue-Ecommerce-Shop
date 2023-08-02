@@ -13,7 +13,7 @@ const sideBarStatus = ref<Boolean>(false);
 <template>
     <!-- Top Navigation Bar -->
     <TopNav 
-        v-if="route.name !== 'forgotPassword'"
+        v-if="route.name !== 'forgotPassword' && route.name !== 'notFound'"
         @toggleSideBar="sideBarStatus = !sideBarStatus" 
     />
 

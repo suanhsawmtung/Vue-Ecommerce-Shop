@@ -52,16 +52,18 @@
  </template>
  
 <script lang="ts" setup>
+import type { OrderFormDataType } from '@/types/order';
+
 defineProps<{
     total?: number
 }>();
 
 const emit = defineEmits<{
-    submit: [data: FormData],
+    submit: [data: OrderFormDataType],
     close: []
 }>()
 
-const submitForm = (formData: FormData) => {
+const submitForm = (formData: OrderFormDataType) => {
     emit('submit', formData);
 } 
 

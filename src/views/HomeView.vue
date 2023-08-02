@@ -32,19 +32,16 @@
             <CardBox 
                 title="Latest" 
                 :items="item.latestItems"
-                @addToCart="addToCart" 
                 v-if="item.latestItems.length !== 0" 
             />
             <CardBox 
                 title="Popular Now" 
                 :items="item.popularItems"
-                @addToCart="addToCart"
                 v-if="item.popularItems.length > 4" 
             />
             <CardBox 
                 title="Best Rating" 
                 :items="item.bestRatingItems"
-                @addToCart="addToCart"
                 v-if="item.bestRatingItems.length !== 0"
             />
         </section>
@@ -95,23 +92,6 @@ const router = useRouter();
 const item = useItemStore();
 const auth = useAuthStore();
 const order = useOrderStore();
-
-const addToCart= async(id: number) => {
-    if(auth.isAuthenticated){
-        let cartData: CartData = { id: id, quantity: 1 };
-        await order.addItemsToCart(cartData);
-        Toast.fire({
-            icon: 'success',
-            title: 'Added item to card.'
-        });
-    }else{
-        router.push({ path: '/login' });
-        Toast.fire({
-            icon: 'info',
-            title: 'Please login first.'
-        });
-    }
-}
 
 onMounted(() => {
     item.getLatestItems();

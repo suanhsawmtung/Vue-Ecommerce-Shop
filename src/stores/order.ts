@@ -1,6 +1,14 @@
 import { defineStore } from "pinia";
 import axios from "axios";
-import type { OrderData, CartItem, CartData, OrderElement, Item } from "@/types/order";
+import type { 
+    OrderData, 
+    CartItem, 
+    CartData, 
+    OrderElement, 
+    Item, 
+    OrderFormDataType,
+    BuyNowFormDataType
+ } from "@/types/order";
 
 export const useOrderStore = defineStore('order', {
     state:(): OrderData => ({
@@ -26,13 +34,15 @@ export const useOrderStore = defineStore('order', {
         }
     },
     actions: {
-        async addItemsToCart(cartData: CartData){
-            try{
+        addItemsToCart(cartData: CartData){
+            return new Promise(async(resolve, reject) => {
                 const { data } = await axios.post('/shop/addItemsToCart', cartData);
-                this.cartItems.push(data.item);
-            }catch(error){
-                console.log(error);
-            }
+                if(data.status === 'created') {
+                    this.cartItems.push(data.item); 
+                    resolve(data.status);
+                }else if(data.status === 'updated') resolve(data.status)
+                else reject(data);
+            })
         },
         async getAllCartItems(){
             try{
@@ -61,10 +71,10 @@ export const useOrderStore = defineStore('order', {
                 console.log(error);
             }
         },
-        async orderCheckout(formData: FormData){
+        async orderCheckout(formData: OrderFormDataType){
             try{
                 const { data } = await axios.post('/shop/orderCheckout', formData);
-                if(data.message === 'success') this.orderFinished = true;
+                if(data.status === 'success') this.orderFinished = true;
             }catch(error){
                 console.log(error);
             }
@@ -84,6 +94,13 @@ export const useOrderStore = defineStore('order', {
             }catch(error){
                 console.log(error);
             }
+        },
+        buyNow(formData: BuyNowFormDataType){
+            return new Promise(async(resolve, reject) => {
+                const { data } = await axios.post('/shop/buyNow', formData);
+                if(data.status === 'success') resolve(data.status);
+                else reject(data.status);
+            })
         }
     }
 })
