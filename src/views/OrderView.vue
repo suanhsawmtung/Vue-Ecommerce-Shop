@@ -48,7 +48,7 @@
                             {{ o.total_price }}
                         </td>
                         <td class="px-6 py-4">
-                            <!-- {{ o.created_at.getTime() }} -->
+                            {{ moment(o.created_at).format("MMM DD, YYYY/HH:mm A") }}
                         </td>
                         <td class="px-6 py-4">
                             <span v-if="o.status === OrderStatus.Pending" class="text-yellow-300 font-bold">
@@ -96,6 +96,7 @@
 <script setup lang="ts">
 import { onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import moment from 'moment';
 import { useOrderStore } from '@/stores/order';
 import { OrderElement, OrderStatus } from '@/types/order';
 

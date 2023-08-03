@@ -9,57 +9,68 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/HomeView.vue')
+      component: () => import('../views/HomeView.vue'),
+      meta: { title: 'Home' }
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import('../views/LoginView.vue')
+      component: () => import('../views/LoginView.vue'),
+      meta: { title: 'Login' }
     },
     {
       path: '/register',
       name: 'register',
-      component: () => import('../views/RegisterView.vue')
+      component: () => import('../views/RegisterView.vue'),
+      meta: { title: 'Register' }
     },
     {
       path: '/forgot-password/:form',
       name: 'forgotPassword',
-      component: () => import('../views/ForgotPasswordView.vue')
+      component: () => import('../views/ForgotPasswordView.vue'),
+      meta: { title: 'Forget Password' }
     },
     {
       path: '/shop',
       name: 'shop',
-      component: () => import('../views/ShopView.vue')
+      component: () => import('../views/ShopView.vue'),
+      meta: { title: 'Shop' }
     },
     {
       path: '/item/:id',
       name: 'itemDetail',
-      component: () => import('../views/ItemDetailView.vue')
+      component: () => import('../views/ItemDetailView.vue'),
+      meta: { title: 'Item Detail' }
     },
     {
       path: '/contact',
       name: 'contact',
-      component: () => import('../views/ContactView.vue')
+      component: () => import('../views/ContactView.vue'),
+      meta: { title: 'Contact Us' }
     },
     {
       path: '/cart',
       name: 'cart',
-      component: () => import('../views/CartView.vue')
+      component: () => import('../views/CartView.vue'),
+      meta: { title: 'Your Cart' }
     },
     {
       path: '/order',
       name: 'order',
-      component: () => import('../views/OrderView.vue')
+      component: () => import('../views/OrderView.vue'),
+      meta: { title: 'Your Orders' }
     },
     {
       path: '/order-detail/:code',
       name: 'orderDetail',
-      component: () => import('../views/OrderDetailView.vue')
+      component: () => import('../views/OrderDetailView.vue'),
+      meta: { title: 'Order Detail' }
     },
     {
       path: '/:pathMatch(.*)*',
       name: 'notFound',
-      component: () => import('../views/NotFoundView.vue')
+      component: () => import('../views/NotFoundView.vue'),
+      meta: { title: 'Not Found' }
     },
   ]
 });
@@ -67,6 +78,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   
   const auth = useAuthStore();
+
+  document.title = `${to.meta.title} | The Vue Shop`;
 
   if(!auth.isAuthenticated && getTokenFromCookie()) auth.getLoginUser();
 

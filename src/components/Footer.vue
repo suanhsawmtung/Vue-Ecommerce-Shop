@@ -19,9 +19,9 @@
             <div class="w-5/6 sm:w-60 h-44 mb-3 sm:mb-0 mt-12 sm:mt-0">
                 <h2 class="font-bold text-2xl text-blue-800 mb-2">Our Vue Shop</h2>
                 <p class="text-base sm:text-sm font-normal text-slate-500">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                    Ratione minus, obcaecati eveniet recusandae quo voluptatum 
-                    voluptatibus atque illum, et molestiae, minima sed tenetur ipsam magnam.
+                    Welcome to Our Shop, your go-to destination for unique finds. 
+                    Discover a handpicked selection of quality products that bring joy 
+                    to your everyday life. Explore and shop with confidence.
                 </p>
             </div>
             

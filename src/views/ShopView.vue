@@ -2,6 +2,7 @@
     <main class="overflow-x-hidden">
         <section class="w-screen h-72 pt-16 bg-black flex flex-col gap-y-5 justify-center items-center">
             <h1 class="font-bold sm:text-4xl text-2xl text-white">#stayhome & explore</h1>
+            <!-- Search Bar -->
             <form 
                 @submit.prevent="submitSearchForm" method="get"
                 class="flex items-center" 
@@ -17,7 +18,9 @@
                     <i class="material-icons">search</i>
                 </button>
             </form>
+
             <div class="flex justify-between items-center w-72 ">
+                <!-- Filter Items By Category -->
                 <div class="relative ">
                     <span 
                         @click="categoryDropdown = !categoryDropdown" 
@@ -41,6 +44,8 @@
                         </ul>
                     </div>
                 </div>
+
+                <!-- Cart  -->
                 <div class="relative cursor-pointer" @click="router.push({ path: '/cart' })">
                     <div 
                         v-if="order.cartItems.length !== 0"
@@ -54,16 +59,21 @@
                 </div>
             </div>
         </section>
+
+        <!-- Display Items Section -->
         <CardBox 
             :items="item.items" 
             :categoryStatus="item.categoryStatus"
             @getAllItems="item.getAllItems"
         />
+
+        <!-- Paginator -->
         <Paginator 
             v-if="item.PaginatedItems.links"
             :data="item.PaginatedItems"
             @pagination-change-page="item.getItems"
         />
+
         <Footer />
     </main>
 </template>
@@ -96,7 +106,7 @@ const submitSearchForm = () => {
 onMounted(async() => {
     await item.getAllItems();
     await item.getAllCategories();
-    await order.getAllCartItems();
+    if(auth.isAuthenticated) await order.getAllCartItems();
 })
 
 </script>

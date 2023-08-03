@@ -1,6 +1,7 @@
 <template>
     <main class="overflow-x-hidden">
         <section class="w-screen h-auto sm:h-screen flex lg:flex-row flex-col bg-gray-100">
+            <!-- Contact Data Display -->
             <div class="w-full lg:w-3/6 h-auto sm:h-full pt-16 sm:pt-0 flex justify-center items-center">
                 <div class="w-5/6 ">
                     <h1 class="font-bold sm:text-3xl text-xl text-blue-800 mb-3">
@@ -21,6 +22,8 @@
                     </ul>
                 </div>
             </div>
+
+            <!-- Contact To Admin Form Box  -->
             <div class="w-full lg:w-3/6 h-auto sm:h-full py-12 sm:py-0 sm:pt-6 md:pt-12 flex justify-center items-center">
                 <div class="p-5 rounded-sm bg-white mb-12 lg:mb-0 flex flex-col gap-3 w-[340px] sm:w-[400px] shadow-lg ">
                     <header class="font-bold text-xl">Get In Touch</header>

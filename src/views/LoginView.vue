@@ -108,6 +108,7 @@ const loginFormData = reactive({
     password: "",
 });
 
+// Vulidate Validation Rules 
 const rules = computed(() => {
     return {
         email: { required, email },
@@ -115,10 +116,13 @@ const rules = computed(() => {
     }
 });
 
+// Vuelidate Validation Checking 
 const v$ = useVuelidate(rules, loginFormData);
 
 const submitLoginForm = async() => {
+    // Vuelidate Validation 
     const result = await v$.value.$validate();
+    
     if(result){
         await auth.login(loginFormData);
         if(auth.isAuthenticated) loginFinished();
@@ -138,10 +142,18 @@ const loginFinished = () => {
 }
 
 onMounted(async () => {
+    // Provider Login 
     if(route.query.email){
         await auth.providerLogin(route.query.email);
         if(auth.isAuthenticated) loginFinished();
-    }
+    }else if(route.query.message){
+        setTimeout(() => {
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Your email already exist.'
+                });
+            }, 300);
+    }        
 })
 
 </script>

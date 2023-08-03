@@ -1,5 +1,6 @@
 <template>
     <main class="overflow-x-hidden">
+        <!-- Order Modal Form -->
         <Teleport to="#app">
             <OrderModal 
                 v-if="isOrdered" 
@@ -8,18 +9,21 @@
                 @submit="submitOrder"
             />
         </Teleport>
+
+        <!-- Item Detail Section -->
         <section
             v-if="item.item.id"
-            class="w-screen flex md:flex-row flex-col justify-between items-center 
+            class="w-screen flex md:flex-row flex-col justify-between
                 sm:mb-0 mb-4 mt-20 z-0"
         >
-            
+            <!-- Item Image -->
             <div class="md:w-6/12 w-full flex justify-center items-center">
                 <div class="w-4/6">
                     <img :src="'http://localhost:8000/storage/products/'+item.item.image" class="w-full" alt="">
                 </div>
             </div>
             
+            <!-- Item Infos -->
             <div class="md:w-6/12 w-full flex justify-start items-start p-4">
                 <div class="w-full flex flex-col items-start">
                     <h1 class="font-semibold text-2xl text-blue-500 mb-3">
@@ -37,7 +41,7 @@
                         <p class="text-slate-500">
                             Total Price: 
                             <span class="ms-1 text-blue-500">
-                                {{ item.item.price * cartFormData.quantity }}
+                                {{ item.item.price * cartFormData.quantity }} Ks
                             </span>
                         </p>
                     </div>
@@ -67,7 +71,9 @@
                             Only {{ item.item.count }} left.
                         </small>
                     </div>
-                    <div class="w-full flex justify-start items-center gap-x-4 mt-8">
+
+                    <!-- Order Or Add To Cart -->
+                    <div class="w-full flex justify-start items-center gap-x-4 my-8">
                         <button 
                             @click="isOrdered = true"
                             class="w-3/6 lg:w-2/6 py-3 px-3 bg-blue-500 font-semibold text-white"
@@ -81,6 +87,7 @@
                             Add To Cart
                         </button>
                     </div>
+                    <p class="text-slate-500">{{ item.item.description }}</p>
                 </div>
             </div>
 

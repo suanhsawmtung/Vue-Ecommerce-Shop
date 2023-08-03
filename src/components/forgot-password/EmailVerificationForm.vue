@@ -42,16 +42,20 @@ const verificationFormData = reactive({
     email: "",
 });
 
+// Vulidate Validation Rules 
 const rules = computed(() => {
     return {
         email: { required, email },
     }
 });
 
+// Vuelidate Validation Checking 
 const v$ = useVuelidate(rules, verificationFormData);
 
 const submitVerificationForm = async() => {
+    // Vuelidate Validation 
     const result = await v$.value.$validate();
+    
     if(result){
         emit('submitVerificationFormEmit', verificationFormData);
     }

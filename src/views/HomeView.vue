@@ -1,5 +1,6 @@
 <template>
     <main class="overflow-x-hidden">
+        <!-- Welcome Section  -->
         <section
             class="w-screen lg:h-screen md:h-120 sm:h-screen h-auto z-0
                 flex md:flex-row flex-col justify-between items-center sm:mb-0 mb-6
@@ -8,10 +9,10 @@
                 <div class="sm:w-4/6 w-5/6 flex flex-col items-start">
                     <h1 class="font-bold sm:text-4xl text-2xl text-blue-800 mb-3">Welcome to Vue Shop</h1>
                     <p class="font-normal text-slate-500 mb-4 text-xs sm:text-base">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-                        Eius atque cupiditate laudantium eligendi quaerat doloribus 
-                        ullam vitae sapiente? Sit recusandae minus amet perferendis dolor, 
-                        nam dolores provident temporibus commodi quidem!
+                        Welcome to our humble online store! We're thrilled to have you here.
+                        Explore our collection of products that we've handpicked just for you. 
+                        Take your time, browse around, and enjoy your shopping experience. 
+                        Thank you for stopping by and being a part of our small but growing community. Happy shopping!
                     </p>
                     <button 
                         @click="router.push({ path: '/shop' })"
@@ -28,6 +29,8 @@
                 </div>
             </div>
         </section>
+
+        <!-- Top Record Display Section  -->
         <section class="w-screen h-auto bg-gray-100 py-12" >
             <CardBox 
                 title="Latest" 
@@ -45,6 +48,8 @@
                 v-if="item.bestRatingItems.length !== 0"
             />
         </section>
+
+        <!-- Contact Section -->
         <section
             class="w-screen md:h-96 sm:h-half h-auto z-0 mt-6 sm:mt-0
                 flex md:flex-row flex-col justify-between items-center 
@@ -53,9 +58,9 @@
                 <div class="sm:w-4/6 w-5/6 flex flex-col items-start">
                     <h1 class="font-bold sm:text-4xl text-2xl text-blue-800 mb-3">Do you need a hand?</h1>
                     <p class="font-normal text-slate-500 mb-4 text-xs sm:text-base">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-                        Eius atque cupiditate laudantium eligendi quaerat doloribus 
-                        ullam vitae sapiente?
+                        If you have any questions, pr need assistance we're here for you. 
+                        Feel free to reach out, and we'll be more than happy to help. 
+                        Your satisfaction is our priority.
                     </p>
                     <button 
                         @click="router.push({ path: '/contact' })"
@@ -72,7 +77,10 @@
                 </div>
             </div>
         </section>
+
+        /** Footer */
         <Footer />
+
     </main>
 </template>
 

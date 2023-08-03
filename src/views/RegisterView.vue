@@ -107,6 +107,7 @@ const registerFormData = reactive({
     password_confirmation: ""
 });
 
+// Vulidate Validation Rules 
 const rules = computed(() => {
     return {
         name: { required, minLength: minLength(4), maxLength: maxLength(15) },
@@ -116,10 +117,13 @@ const rules = computed(() => {
     }
 });
 
+// Vuelidate Validation Checking 
 const v$ = useVuelidate(rules, registerFormData);
 
 const submitRegisterForm = async() => {
+    // Vuelidate Validation 
     const result = await v$.value.$validate();
+    
     if(result){
         await auth.register(registerFormData);
         if(auth.isAuthenticated) {

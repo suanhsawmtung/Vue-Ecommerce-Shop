@@ -1,5 +1,6 @@
 <template>
     <div class="w-screen relative overflow-x-hidden">
+        <!-- Order Modal -->
         <Teleport to="#app">
             <OrderModal 
                 v-if="isOrdered" 
@@ -8,6 +9,7 @@
                 @submit="submitOrder"
             />
         </Teleport>
+
         <div 
             v-if="!order.orderFinished && order.cartItems.length !== 0"
             class="w-full flex justify-between items-center p-5 mt-16"
@@ -23,6 +25,7 @@
             </button>
         </div>
 
+        <!-- All Items In Your Cart Section -->
         <CartList 
             v-if="!order.orderFinished && order.cartItems.length !== 0"
             :cartItems="order.cartItems"
@@ -45,6 +48,7 @@
             </button>
         </div>
 
+        <!-- Order Finished Section -->
         <div 
             v-if="order.orderFinished || order.cartItems.length === 0"
             class="w-full h-screen flex flex-col justify-center items-center gap-y-4"

@@ -75,6 +75,7 @@ const resetFormData = reactive({
 
 });
 
+// Vulidate Validation Rules 
 const rules = computed(() => {
     return {
         email: { required, email },
@@ -87,10 +88,13 @@ const rules = computed(() => {
     }
 });
 
+// Vuelidate Validation Checking 
 const v$ = useVuelidate(rules, resetFormData);
 
 const submitResetForm = async() => {
+    // Vuelidate Validation 
     const result = await v$.value.$validate();
+    
     if(result){
         emit('submitResetFormEmit', resetFormData);
     }
