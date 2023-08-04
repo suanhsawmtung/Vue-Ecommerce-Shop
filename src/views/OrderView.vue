@@ -98,7 +98,14 @@ import { onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import moment from 'moment';
 import { useOrderStore } from '@/stores/order';
-import { OrderElement, OrderStatus } from '@/types/order';
+import type { OrderElement } from '@/types/order';
+
+enum OrderStatus {
+    Pending,
+    Accepted,
+    Paid,
+    Done
+}
 
 const router = useRouter();
 const order = useOrderStore();

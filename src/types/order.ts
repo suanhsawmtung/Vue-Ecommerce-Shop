@@ -37,11 +37,11 @@ export interface CartData {
 
 export type CartItemActionTerm = 'minus' | 'plus'
 
-export enum OrderStatus {
-    Pending = 0,
-    Accepted = 1,
-    Paid = 2,
-    Done = 3
+enum OrderStatus {
+    Pending,
+    Accepted,
+    Paid,
+    Done
 }
 
 export interface OrderElement {

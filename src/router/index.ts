@@ -16,7 +16,10 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: () => import('../views/LoginView.vue'),
-      meta: { title: 'Login' }
+      meta: { title: 'Login' }, 
+      props: (route) => ({
+        email: route.query.email as string | string[], // Ensure proper type
+      }),
     },
     {
       path: '/register',

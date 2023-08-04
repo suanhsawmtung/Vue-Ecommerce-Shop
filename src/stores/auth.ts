@@ -47,7 +47,7 @@ export const useAuthStore = defineStore('auth', {
         async loginWithFacebook(){
             location.href = 'http://localhost:8000/api/auth/facebook/redirect';
         },
-        async providerLogin(email: string){
+        async providerLogin(email: string | any){
             try{
                 const { data } = await axios.get(`/auth/provider/login/${email}`);
                 this.user = data.user;

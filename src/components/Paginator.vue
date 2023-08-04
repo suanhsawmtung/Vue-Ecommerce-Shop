@@ -3,7 +3,7 @@
         aria-label="Page navigation example" 
         class="w-full mx-auto sm:px-0 px-2 py-4 bg-gray-100"
     >
-        <!-- Pagination -->
+        Pagination
         <ul class="flex items-center -space-x-px h-10 text-base flex justify-center">
 
             Go To The Previous Page
