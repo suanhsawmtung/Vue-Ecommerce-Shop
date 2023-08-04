@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div v-if="props.data.last_page !== 1"
         aria-label="Page navigation example" 
         class="w-full mx-auto sm:px-0 px-2 py-4 bg-gray-100"
@@ -6,7 +6,7 @@
         <!-- Pagination -->
         <ul class="flex items-center -space-x-px h-10 text-base flex justify-center">
 
-            <!-- Go To The Previous Page -->
+            Go To The Previous Page
             <li 
                 @click="changePageEmit(props.data.prev_page_url)"
                 :disabled="data.current_page === 1"
@@ -21,7 +21,7 @@
                 </svg>
             </li>
 
-            <!-- Click Buttons To Direct Page -->
+            Click Buttons To Direct Page
             <li 
                 v-if="data" 
                 v-for="(link, index) in links" :key="index"
@@ -41,7 +41,7 @@
                 {{ link.label }}
             </li>
 
-            <!-- Go To The Next Page -->
+            Go To The Next Page
             <li 
                 @click="changePageEmit(props.data.next_page_url)"
                 :disabled="data.current_page === data.last_page"
@@ -57,7 +57,7 @@
             </li>
 
         </ul>
-        <!-- Pagination End -->
+        Pagination End
     </div>
 </template>
 
@@ -87,4 +87,4 @@ const links = computed(() => {
 
 <style scoped>
 
-</style>
+</style> -->

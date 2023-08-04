@@ -34,7 +34,7 @@
                         <div class="sm:w-52 sm:h-60 w-40 h-52 drop-shadow-md mb-4 rounded-lg overflow-hidden">
                             <div class="sm:w-52 w-40 sm:h-40 h-36 bg-white">
                                 <img 
-                                    :src="'http://localhost:8000/storage/products/' + item.image" 
+                                    :src="'http://165.22.48.33/storage/products/' + item.image" 
                                     class="w-full h-full object-contain" alt=""
                                 >
                             </div>
@@ -74,7 +74,7 @@ import { FreeMode, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
-import { Datum } from '@/types/shop';
+import type { Datum } from '@/types/shop';
 
 defineProps<{
     title?: String,

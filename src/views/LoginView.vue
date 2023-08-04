@@ -144,7 +144,7 @@ const loginFinished = () => {
 onMounted(async () => {
     // Provider Login 
     if(route.query.email){
-        await auth.providerLogin(route.query.email);
+        await auth.providerLogin(route.query.email.toString());
         if(auth.isAuthenticated) loginFinished();
     }else if(route.query.message){
         setTimeout(() => {

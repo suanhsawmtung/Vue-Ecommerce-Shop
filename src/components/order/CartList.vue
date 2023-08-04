@@ -91,7 +91,7 @@
 </template>
 
 <script setup lang="ts">
-import { CartItem } from '@/types/order';
+import type { CartItem } from '@/types/order';
 
 defineProps<{
     cartItems?: CartItem[],

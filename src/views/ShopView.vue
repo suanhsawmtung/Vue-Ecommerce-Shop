@@ -68,11 +68,11 @@
         />
 
         <!-- Paginator -->
-        <Paginator 
+        <!-- <Paginator 
             v-if="item.PaginatedItems.links"
             :data="item.PaginatedItems"
             @pagination-change-page="item.getItems"
-        />
+        /> -->
 
         <Footer />
     </main>
@@ -88,7 +88,7 @@ import { Toast } from '@/services/alert';
 import type { CartData } from '@/types/order';
 import Footer from '../components/Footer.vue';
 import CardBox from '../components/shop/CardBox.vue';
-import Paginator from '@/components/Paginator.vue';
+// import Paginator from '@/components/Paginator.vue';
 
 const auth = useAuthStore();
 const item = useItemStore();
