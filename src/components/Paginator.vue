@@ -1,15 +1,15 @@
-<!-- <template>
-    <div v-if="props.data.last_page !== 1"
+<template>
+    <div v-if="item.PaginatedItems.last_page !== 1"
         aria-label="Page navigation example" 
         class="w-full mx-auto sm:px-0 px-2 py-4 bg-gray-100"
     >
-        Pagination
+        <!-- Pagination -->
         <ul class="flex items-center -space-x-px h-10 text-base flex justify-center">
 
-            Go To The Previous Page
+            <!-- Go To The Previous Page -->
             <li 
-                @click="changePageEmit(props.data.prev_page_url)"
-                :disabled="data.current_page === 1"
+                @click="changePageEmit(item.PaginatedItems.prev_page_url)"
+                :disabled="item.PaginatedItems.current_page === 1"
                 class="flex items-center justify-center px-4 h-10 ml-0 leading-tight 
                 text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 
                 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 cursor-pointer
@@ -21,9 +21,9 @@
                 </svg>
             </li>
 
-            Click Buttons To Direct Page
+            <!-- Click Buttons To Direct Page -->
             <li 
-                v-if="data" 
+                v-if="item.PaginatedItems" 
                 v-for="(link, index) in links" :key="index"
                 @click="changePageEmit(link.url)"
                 :class="{
@@ -41,10 +41,10 @@
                 {{ link.label }}
             </li>
 
-            Go To The Next Page
+            <!-- Go To The Next Page -->
             <li 
-                @click="changePageEmit(props.data.next_page_url)"
-                :disabled="data.current_page === data.last_page"
+                @click="changePageEmit(item.PaginatedItems.next_page_url)"
+                :disabled="item.PaginatedItems.current_page === item.PaginatedItems.last_page"
                 class="flex items-center justify-center px-4 h-10 leading-tight 
                 text-gray-500 bg-white border border-gray-300 rounded-r-lg cursor-pointer
                 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 
@@ -57,34 +57,31 @@
             </li>
 
         </ul>
-        Pagination End
+        <!-- Pagination End -->
     </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { useItemStore } from '@/stores/item';
 import type { Items, Datum } from '@/types/shop';
 
-const props = defineProps<{
-    data?: Items,
-}>();
+const item = useItemStore();
 
 const emit = defineEmits<{
     'pagination-change-page': [page: string],
 }>();
 
-const changePageEmit = (url: string) => {
-    let URL = url.split('api')[1];
-    emit('pagination-change-page', URL)
+const changePageEmit = (url: string | null) => {
+    if(url){
+        let URL = url.split('api')[1];
+        emit('pagination-change-page', URL)
+    }
 }
 
 const links = computed(() => {
-    return props.data.links.slice(1, (props.data.links.length-1));
+    return item.PaginatedItems.links.slice(1, (item.PaginatedItems.links.length-1));
 });
 
 
 </script>
-
-<style scoped>
-
-</style> -->
