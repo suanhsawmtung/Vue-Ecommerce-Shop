@@ -78,7 +78,7 @@
             </div>
         </section>
 
-        /** Footer */
+        <!-- Footer  -->
         <Footer />
 
     </main>
