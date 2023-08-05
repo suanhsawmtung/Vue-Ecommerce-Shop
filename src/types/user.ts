@@ -37,7 +37,7 @@ export interface EmailVerificationFormData{
 }
 
 export interface ResetPasswordFormData{
-    token: string;
+    token: string | any;
     email: string;
     password: string;
     password_confirmation: string;
