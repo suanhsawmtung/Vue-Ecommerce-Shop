@@ -34,7 +34,7 @@
                         <div class="sm:w-52 sm:h-60 w-40 h-52 drop-shadow-md mb-4 rounded-lg overflow-hidden">
                             <div class="sm:w-52 w-40 sm:h-40 h-36 bg-white">
                                 <img 
-                                    :src="'http://165.22.48.33/storage/products/' + item.image" 
+                                    :src="'https://nooneuse.shop/storage/products/' + item.image" 
                                     class="w-full h-full object-contain" alt=""
                                 >
                             </div>

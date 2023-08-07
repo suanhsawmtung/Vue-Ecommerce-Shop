@@ -42,10 +42,10 @@ export const useAuthStore = defineStore('auth', {
             this.isAuthenticated = true;
         },
         async loginWithGoogle(){
-            location.href = 'http://localhost:8000/api/auth/google/redirect';
+            location.href = 'https://nooneuse.shop/api/auth/google/redirect';
         },
         async loginWithFacebook(){
-            location.href = 'http://localhost:8000/api/auth/facebook/redirect';
+            location.href = 'https://nooneuse.shop/api/auth/facebook/redirect';
         },
         async providerLogin(email: string | any){
             try{

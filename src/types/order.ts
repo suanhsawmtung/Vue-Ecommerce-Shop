@@ -37,7 +37,7 @@ export interface CartData {
 
 export type CartItemActionTerm = 'minus' | 'plus'
 
-enum OrderStatus {
+export enum OrderCondition {
     Pending,
     Accepted,
     Paid,
@@ -51,7 +51,7 @@ export interface OrderElement {
     phone:       string;
     address:     string;
     total_price: number;
-    status:      OrderStatus;
+    status:      OrderCondition;
     created_at:  string;
     updated_at:  string;
     order_list:  OrderList[];

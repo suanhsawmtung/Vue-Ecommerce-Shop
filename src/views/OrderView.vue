@@ -51,16 +51,16 @@
                             {{ moment(o.created_at).format("MMM DD, YYYY/HH:mm A") }}
                         </td>
                         <td class="px-6 py-4">
-                            <span v-if="o.status === OrderStatus.Pending" class="text-yellow-300 font-bold">
+                            <span v-if="o.status === OrderCondition.Pending" class="text-yellow-300 font-bold">
                                 Pending
                             </span>
                             <span 
-                                v-if="o.status === OrderStatus.Accepted || o.status === OrderStatus.Paid" 
+                                v-if="o.status === OrderCondition.Accepted || o.status === OrderCondition.Paid" 
                                 class="text-blue-500 font-bold"
                             >
                                 Accepted
                             </span>
-                            <span v-if="o.status === OrderStatus.Done" class="text-gray-500 font-bold">
+                            <span v-if="o.status === OrderCondition.Done" class="text-gray-500 font-bold">
                                 Done
                             </span>
                         </td>
@@ -99,13 +99,7 @@ import { useRouter } from 'vue-router';
 import moment from 'moment';
 import { useOrderStore } from '@/stores/order';
 import type { OrderElement } from '@/types/order';
-
-enum OrderStatus {
-    Pending,
-    Accepted,
-    Paid,
-    Done
-}
+import { OrderCondition } from '@/types/order';
 
 const router = useRouter();
 const order = useOrderStore();

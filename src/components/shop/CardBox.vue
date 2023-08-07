@@ -40,7 +40,7 @@
                 <div class="w-52 h-60 drop-shadow-md mb-4 rounded-lg overflow-hidden">
                     <div class="w-full h-40 bg-white overflow-hidden">
                         <img 
-                            :src="'http://165.22.48.33/storage/products/' + item.image" 
+                            :src="'https://nooneuse.shop/storage/products/' + item.image" 
                             class="w-full h-full object-contain"
                             alt=""
                         >
