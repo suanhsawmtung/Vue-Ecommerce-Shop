@@ -30,7 +30,7 @@
                 >
                     <td class="px-6 py-4">
                         <img 
-                            :src="'http://localhost:8000/storage/products/' + item.product.image" 
+                            :src="'https://nooneuse.shop/storage/products/' + item.product.image" 
                             alt="" class="w-auto h-8 sm:h-12"
                         >
                     </td>
