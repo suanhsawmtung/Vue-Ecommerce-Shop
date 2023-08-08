@@ -19,7 +19,7 @@
             <!-- Item Image -->
             <div class="md:w-6/12 w-full flex justify-center items-center">
                 <div class="w-4/6">
-                    <img :src="'http://165.22.48.33/storage/products/'+item.item.image" class="w-full" alt="">
+                    <img :src="'https://nooneuse.shop/storage/products/'+item.item.image" class="w-full" alt="">
                 </div>
             </div>
             
